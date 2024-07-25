@@ -2,6 +2,7 @@ package com.kitri.myspringboard2.controller;
 
 import com.kitri.myspringboard2.domain.Board;
 import com.kitri.myspringboard2.service.BoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     @Autowired
@@ -19,9 +21,11 @@ public class BoardController {
 
     @GetMapping("/list")
     public String list(Model model) {
+        log.info("list 메서드 진입 start");
         List<Board> boards = boardService.findAll();
 
         model.addAttribute("boards", boards);
+        log.info("list 메서드 진입 end");
         return "board/list";
     }
 
@@ -34,8 +38,10 @@ public class BoardController {
 
     @GetMapping("/add")
     public String addForm(Model model) {
+        log.info("addForm 메서드 진입 start");
         model.addAttribute("username",
                 SecurityContextHolder.getContext().getAuthentication().getName());
+        log.info("addForm 메서드 진입 end");
         return "board/add";
     }
 
