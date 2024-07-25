@@ -38,7 +38,11 @@ public class SecurityConfig {
                                 .requestMatchers("/signup", "/WEB-INF/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin(withDefaults()); // 스프링 시큐리티 기본 로그인 페이지 사용
+                .formLogin(form -> form
+                        .loginPage("/login") // 사용자 정의 로그인 페이지
+                        .defaultSuccessUrl("/board/list", true) // 로그인 성공 후 이동할 페이지
+                        .permitAll()
+                );
         return http.build();
     }
 
